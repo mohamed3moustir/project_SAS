@@ -21,6 +21,7 @@ int total_etudiants = 0;
 int i,j,test;
 struct etudiant temp; 
 struct etudiant tmp;
+float moyenne;
 // function Ajoute
 void afficherMenuAjout();
 void Ajoute_etudiant_simple();
@@ -38,8 +39,16 @@ void Ajoute_etudiant_simple();
  //
  void Rechercher_Etudiant();
  //
+ void Trier_etudiant_par();
  void Trier_etudiant_par_nom();
  void Tri_par_note_generale();
+ // 
+ void Afficher_statistiques();
+ void Afficher_nombre_total ();
+ void Afficher_moyenne_generale_superieure();
+void Afficher_nombre_departement();
+void Afficher_etudiants_ayant_meilleures3();
+void Afficher_nombre_etudiants_departement();
 int main(){
    
    
@@ -81,13 +90,13 @@ int main(){
          Calculer_moyenne_generale();
             break;
             case 6:
-           Tri_par_note_generale();
+         Afficher_statistiques();
             break;
         case 7:
          Rechercher_Etudiant();
             break;
         case 8 :
-          Trier_etudiant_par_nom();
+        Trier_etudiant_par();
           break;
         case 9:
             travail = 0;
@@ -322,10 +331,163 @@ void Calculer_moyenne_generale(){
 }
 
 
+
+//
+void Afficher_statistiques(){
+        int der=1;
+       int choix2;
+       int choix3;
+   puts("  #### Trier_etudiant_par ####   ");
+        puts("\n\t1.Afficher le nombre total d etudiants ");
+        puts("\t2.Afficher le nombre d etudiants dans chaque departement.");
+        puts("\t3.Afficher les etudiants ayant une moyenne generale superieure a un certain seuil.");
+        puts("\t4.Afficher les 3 etudiants ayant les meilleures notes.");
+        puts("\t5.Afficher le nombre d etudiants ayant reussi dans chaque departement");
+        puts("\t6. Retour");
+    
+    while(der) {
+    printf("\nEntrer votre choix: ");
+     
+        scanf("%d", &choix2);
+        switch (choix2)
+        {
+        case 1:
+         Afficher_nombre_total();
+        break;
+        case 2 :
+         Afficher_nombre_departement();
+         break;;
+        case 3 :
+        Afficher_moyenne_generale_superieure();
+        break;
+        case 4:
+        Afficher_etudiants_ayant_meilleures3();
+        break;
+        case 5:      
+        Afficher_nombre_etudiants_departement();
+        break;
+        case 6:
+        der=0;
+        break;
+        } 
+    }while (choix3 != 1 && der != 0) {
+            puts("\n----------------");
+            puts("1. Retour");
+            printf("Entrez votre choix: ");
+            scanf("%d", &choix3);
+            while (getchar() != '\n');
+    }
+}
+
+void Afficher_nombre_total (){
+    float sum1=0;
+    for (int i = 0; i < total_etudiants; i++) {
+        sum1 += etudiants[i].note_generale;
+    }
+    float moyenne1 = sum1 / total_etudiants;
+
+     
+     if(total_etudiants > 0)
+           printf("  la moyenne generale pour l unviersite est %.2f \n",moyenne1);
+     else
+           printf("  Aucun etudiant trouve pour l unviersite\n");
+
+}
+
+void Afficher_nombre_departement(){
+
+      char departem[MAX_ETUDIANTS];
+    
+    int count=0;
+    printf("enter la departement ");
+    scanf("%s",&departem);
+    for (int i = 0; i < total_etudiants; i++) {
+    if(strcmp(etudiants[i].departement,departem)==0){
+      count++;
+    }
+    }
+   printf(" le nombre d etudiants dans chaque departement %s est %d\n", departem,count);
+    
+}
+
+
+void Afficher_moyenne_generale_superieure(){
+    float new_note;
+    printf("enter la nwe not ");
+    scanf("%f",&new_note);
+for ( i = 0; i < total_etudiants; i++) {
+        if(new_note < etudiants[i].note_generale){
+           printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
+
+        }
+   }
+}
+
+
+void Afficher_etudiants_ayant_meilleures3(){
+    int num = 3;
+    for(i = 0 ;i<total_etudiants;i++){
+    for( int j = 0; j < total_etudiants - i - 1 ;j++){
+        if(etudiants[j].note_generale < etudiants[j+1].note_generale){
+            tmp=etudiants[j];
+            etudiants[j]=etudiants[j+1];
+            etudiants[j+1] = tmp;
+
+
+        }else if(total_etudiants < 3){
+         num=2;
+        }
+    }
+  }
+  for (int i = 0; i < num; i++)
+    {
+        printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
+    } 
+} 
+
+void Afficher_nombre_etudiants_departement(){
+    int moyanne=10;
+    for(i = 0 ; i < total_etudiants ; i++){
+        if(etudiants[i].note_generale>moyanne){
+             printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
+        }else
+        printf("is not found \n");
+    }
+}
+
+
+
+
+
+
+
 // 
 void Trier_etudiant_par()
 {
-    
+       int choix1;
+   puts("  #### Trier_etudiant_par ####   ");
+        puts("\n\t1.Trier etudiant par nom ");
+        puts("\t2.Tri par note generale");
+        puts("\t3.");
+        puts("4. Retour");
+    do
+    {
+    printf("\nEntrer votre choix: ");
+     
+        scanf("%d", &choix1);
+        switch (choix1)
+        {
+        case 1:
+        Trier_etudiant_par_nom();
+        continue;
+        case 2 :
+        Tri_par_note_generale();
+        case 3 :
+        
+        continue;
+        case 4:
+        continue;
+        } }while (choix1 != 3);
 }
 
 void Trier_etudiant_par_nom(){
@@ -349,6 +511,7 @@ void Trier_etudiant_par_nom(){
 
 void Tri_par_note_generale(){
 
+
     for(i = 0 ;i<total_etudiants;i++){
     for( int j = 0; j < total_etudiants - i - 1 ;j++){
         if(etudiants[j].note_generale < etudiants[j+1].note_generale){
@@ -365,3 +528,14 @@ void Tri_par_note_generale(){
         printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
     } 
 }
+
+
+
+
+
+
+
+
+
+
+
