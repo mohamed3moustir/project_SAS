@@ -21,6 +21,7 @@ int total_etudiants = 0;
 int i,j,test;
 struct etudiant temp; 
 struct etudiant tmp;
+struct etudiant tmpe;
 float moyenne;
 // function Ajoute
 void afficherMenuAjout();
@@ -42,6 +43,7 @@ void Ajoute_etudiant_simple();
  void Trier_etudiant_par();
  void Trier_etudiant_par_nom();
  void Tri_par_note_generale();
+ void Tri_etudiant_selon_statut_reussite();
  // 
  void Afficher_statistiques();
  void Afficher_nombre_total ();
@@ -49,10 +51,10 @@ void Ajoute_etudiant_simple();
 void Afficher_nombre_departement();
 void Afficher_etudiants_ayant_meilleures3();
 void Afficher_nombre_etudiants_departement();
-int main(){
-   
-   
 
+
+
+int main(){
     int travail = 1;
 
     // La menu principale
@@ -61,8 +63,8 @@ int main(){
         puts("#### Gestion des etudiant ####");
         puts("\n\t1. Ajouter un etudiant ");
         puts("\t2.Afficher un etudiant");
-        puts("\t3.  Modifier un etudiant");
-        puts("\t4. Supprimer un etudiant");
+        puts("\t3.Modifier un etudiant");
+        puts("\t4.Supprimer un etudiant");
         puts("\t5.Calculer la moyenne generale");
         puts("\t6.Afficher les statistiques");
         puts("\t7.Rechercher un etudiant ");
@@ -410,7 +412,6 @@ void Afficher_nombre_departement(){
     
 }
 
-
 void Afficher_moyenne_generale_superieure(){
     float new_note;
     printf("enter la nwe not ");
@@ -448,7 +449,7 @@ void Afficher_etudiants_ayant_meilleures3(){
 void Afficher_nombre_etudiants_departement(){
     int moyanne=10;
     for(i = 0 ; i < total_etudiants ; i++){
-        if(etudiants[i].note_generale>moyanne){
+        if(etudiants[i].note_generale >= moyanne){
              printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
         }else
         printf("is not found \n");
@@ -468,7 +469,7 @@ void Trier_etudiant_par()
    puts("  #### Trier_etudiant_par ####   ");
         puts("\n\t1.Trier etudiant par nom ");
         puts("\t2.Tri par note generale");
-        puts("\t3.");
+        puts("\t3.void Tri etudiant selon statut reussite");
         puts("4. Retour");
     do
     {
@@ -483,7 +484,7 @@ void Trier_etudiant_par()
         case 2 :
         Tri_par_note_generale();
         case 3 :
-        
+         Tri_etudiant_selon_statut_reussite();
         continue;
         case 4:
         continue;
@@ -518,8 +519,6 @@ void Tri_par_note_generale(){
             tmp=etudiants[j];
             etudiants[j]=etudiants[j+1];
             etudiants[j+1] = tmp;
-
-
         }
     }
   }
@@ -527,6 +526,28 @@ void Tri_par_note_generale(){
     {
         printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
     } 
+}
+
+void Tri_etudiant_selon_statut_reussite(){
+   
+    float not_er =10;
+   for(i=0 ; i<total_etudiants ;i++){
+   
+        for(j=0;j<total_etudiants-i-1;j++){
+            if(etudiants[j].note_generale < etudiants[j+1].note_generale){
+           tmpe = etudiants[j];
+         etudiants[j] = etudiants[j+1];
+         etudiants[j+1]=tmpe;
+   
+            }
+              
+    }
+   }
+ for (int i = 0; i < total_etudiants; i++)
+    {
+         if(etudiants[i].note_generale >= not_er){
+        printf("   [%d]      %s      %s      %s      %s   %.2f\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, etudiants[i].departement,etudiants[i].note_generale);
+    } }
 }
 
 
