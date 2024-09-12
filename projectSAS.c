@@ -434,13 +434,23 @@ void Afficher_moyenne_generale_superieure(){
     float new_note;
     printf("enter la nwe not ");
     scanf("%f",&new_note);
-for ( i = 0; i < total_etudiants; i++) {
-        if(new_note > etudiants[i].note_generale){
-          for(int i=0;i<total_etudiants;i++){
-printf("   [%d]   ||     %s    ||       %s    ||         %s            ||         %s         ||       %.2f          ||\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, departements[etudiants[i].departement],etudiants[i].note_generale);
+
+     for(i = 0 ;i<total_etudiants;i++){
+    for( int j = 0; j < total_etudiants - i - 1 ;j++){
+        if(etudiants[j].note_generale < etudiants[j+1].note_generale){
+            tmp=etudiants[j];
+            etudiants[j]=etudiants[j+1];
+            etudiants[j+1] = tmp;
+        }
+    }
+   
+
+        if(new_note < etudiants[i].note_generale){
+          
+      printf("   [%d]   ||     %s    ||       %s    ||         %s            ||         %s         ||       %.2f          ||\n", etudiants[i].id,etudiants[i].nom,etudiants[i].prenom,etudiants[i].date_naissance, departements[etudiants[i].departement],etudiants[i].note_generale);
            printf("=======================================================================================================================\n");
     
-}
+
 
         }
             
@@ -542,7 +552,7 @@ void Trier_etudiant_par_nom(){
        
   for (int i = 0; i < total_etudiants; i++) {
     for (int j = 0 ; j<total_etudiants-i-1; j++) {
-        if(strcmp(etudiants[j].nom,etudiants[j+1].nom)<0){
+        if(strcmp(etudiants[j].nom,etudiants[j+1].nom) < 0){
                 temp = etudiants[j];
                 etudiants[j] = etudiants[j+1];
                 etudiants[j+1] = temp;
